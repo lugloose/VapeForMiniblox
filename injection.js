@@ -342,8 +342,59 @@ function modifyCode(text) {
 		}
 	`);
 
+	// SKIN
+	addReplacement('ClientSocket.on("CPacketSpawnPlayer",$=>{const et=j.world.getPlayerById($.id);', `
+		if ($.socketId === player$1.socketId && enabledModules["AntiBan"]) {
+			hud3D.remove(hud3D.rightArm);
+			hud3D.rightArm = undefined;
+			player$1.profile.cosmetics.skin = "GrandDad";
+			$.cosmetics.skin = "GrandDad";
+			$.cosmetics.cape = "GrandDad";
+		}
+	`);
+	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2,skinny:!1},');
+	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2},');
+	addReplacement('async downloadSkin(_){', `
+		if (_ == "GrandDad") {
+			const $ = skins[_];
+			return new Promise((et, tt) => {
+				textureManager.loader.load("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/skin.png", rt => {
+					const nt = {
+						atlas: rt,
+						id: _,
+						skinny: $.skinny,
+						ratio: rt.image.width / 64
+					};
+					SkinManager.createAtlasMat(nt), this.skins[_] = nt, et();
+				}, void 0, function(rt) {
+					console.error(rt), et();
+				});
+			});
+		}
+	`);
+	addReplacement('async downloadCape(_){', `
+		if (_ == "GrandDad") {
+			const $ = capes[_];
+			return new Promise((et, tt) => {
+				textureManager.loader.load("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/cape.png", rt => {
+					const nt = {
+						atlas: rt,
+						id: _,
+						name: $.name,
+						ratio: rt.image.width / 64,
+						rankLevel: $.tier,
+						isCape: !0
+					};
+					SkinManager.createAtlasMat(nt), this.capes[_] = nt, et();
+				}, void 0, function(rt) {
+					console.error(rt), et();
+				});
+			});
+		}
+	`);
+
 	// LOGIN BYPASS
-	// addReplacement('new SPacketLoginStart({requestedUuid:localStorage.getItem(REQUESTED_UUID_KEY)??void 0,session:localStorage.getItem(SESSION_TOKEN_KEY)??"",hydration:localStorage.getItem("hydration")??"0",metricsId:localStorage.getItem("metrics_id")??"",clientVersion:VERSION$1})', 'new SPacketLoginStart({requestedUuid:void 0,session:(enabledModules["AntiBan"] ? "" : (localStorage.getItem(SESSION_TOKEN_KEY) ?? "")),hydration:"0",metricsId:uuid$1(),clientVersion:VERSION$1})', true);
+	addReplacement('new SPacketLoginStart({requestedUuid:localStorage.getItem(REQUESTED_UUID_KEY)??void 0,session:localStorage.getItem(SESSION_TOKEN_KEY)??"",hydration:localStorage.getItem("hydration")??"0",metricsId:localStorage.getItem("metrics_id")??"",clientVersion:VERSION$1})', 'new SPacketLoginStart({requestedUuid:void 0,session:(enabledModules["AntiBan"] ? "" : (localStorage.getItem(SESSION_TOKEN_KEY) ?? "")),hydration:"0",metricsId:uuid$1(),clientVersion:VERSION$1})', true);
 
 	// KEY FIX
 	addReplacement('Object.assign(keyMap,_)', '; keyMap["Semicolon"] = "semicolon"; keyMap["Apostrophe"] = "apostrophe";');
