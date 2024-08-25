@@ -297,7 +297,7 @@ function modifyCode(text) {
 		}
 	`);
 	addReplacement('async downloadCape(_){', `
-		if (_ == "Black Optifine") {
+		if (_ == "Optifine") {
 			const $ = capes[_];
 			return new Promise((et, tt) => {
 				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/cape.png", rt => {
