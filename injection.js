@@ -347,15 +347,15 @@ function modifyCode(text) {
 		if ($.socketId === player$1.socketId && enabledModules["AntiBan"]) {
 			hud3D.remove(hud3D.rightArm);
 			hud3D.rightArm = undefined;
-			player$1.profile.cosmetics.skin = "GrandDad";
+			player$1.profile.cosmetics.skin = "Purple";
 			$.cosmetics.skin = "GrandDad";
 			$.cosmetics.cape = "GrandDad";
 		}
 	`);
-	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2,skinny:!1},');
-	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2},');
+	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'Purple:{id:"Purple",name:"Purple",tier:2,skinny:!1},');
+	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'Purple:{id:"Purple",name:"Purple",tier:2},');
 	addReplacement('async downloadSkin(_){', `
-		if (_ == "GrandDad") {
+		if (_ == "Purple") {
 			const $ = skins[_];
 			return new Promise((et, tt) => {
 				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/skin.png", rt => {
