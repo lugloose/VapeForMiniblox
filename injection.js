@@ -238,82 +238,6 @@ function modifyCode(text) {
 	// SPRINT
 	addReplacement('at=keyPressedDump("shift")||touchcontrols.sprinting', '||enabledModules["Sprint"]');
 
-	// VELOCITY
-	addReplacement('"CPacketEntityVelocity",$=>{const et=j.world.entitiesDump.get($.id);', `
-		if (player$1 && $.id == player$1.id && enabledModules["Velocity"]) {
-			if (velocityhori[1] == 0 && velocityvert[1] == 0) return;
-			$.motion = new Vector3$1($.motion.x * velocityhori[1], $.motion.y * velocityvert[1], $.motion.z * velocityhori[1]);
-		}
-	`);
-	addReplacement('"CPacketExplosion",$=>{', `
-		if ($.playerPos && enabledModules["Velocity"]) {
-			if (velocityhori[1] == 0 && velocityvert[1] == 0) return;
-			$.playerPos = new Vector3$1($.playerPos.x * velocityhori[1], $.playerPos.y * velocityvert[1], $.playerPos.z * velocityhori[1]);
-		}
-	`);
-
-	// KEEPSPRINT
-	addReplacement('tt>0&&($.addVelocity(-Math.sin(this.yaw)*tt*.5,.1,-Math.cos(this.yaw)*tt*.5),this.motion.x*=.6,this.motion.z*=.6,this.setSprinting(!1)),', `
-		if (tt > 0) {
-			$.addVelocity(-Math.sin(this.yaw) * tt * .5, .1, -Math.cos(this.yaw) * tt * .5);
-			if (this != player$1 || !enabledModules["KeepSprint"]) {
-				this.motion.x *= .6;
-				this.motion.z *= .6;
-				this.setSprinting(!1);
-			}
-		}
-	`, true);
-
-	// KILLAURA
-	addReplacement('else player$1.isBlocking()?', 'else (player$1.isBlocking() || blocking)?', true);
-	addReplacement('this.entity.isBlocking()', '(this.entity.isBlocking() || this.entity == player$1 && blocking)', true);
-	addReplacement('const nt={onGround:this.onGround}', `, realYaw = sendYaw || this.yaw`);
-	addReplacement('this.yaw-this.', 'realYaw-this.', true);
-	addReplacement('nt.yaw=player.yaw', 'nt.yaw=realYaw', true);
-	addReplacement('this.lastReportedYawDump=this.yaw,', 'this.lastReportedYawDump=realYaw,', true);
-	addReplacement('this.neck.rotation.y=controls$1.yaw', 'this.neck.rotation.y=(sendYaw||controls$1.yaw)', true);
-
-	// NOSLOWDOWN
-	addReplacement('const $=this.jumping,et=this.sneak,tt=-.8,rt=this.moveForwardDump<=tt;', `
-		const slowdownCheck = this.isUsingItem() && !enabledModules["NoSlowdown"];
-	`);
-	addReplacement('updatePlayerMoveState(),this.isUsingItem()', 'updatePlayerMoveState(),slowdownCheck', true);
-	addReplacement('it&&!this.isUsingItem()', 'it&&!slowdownCheck', true);
-	addReplacement('0),this.sneak', ' && !enabledModules["NoSlowdown"]');
-
-	// STEP
-	addReplacement('et.y=this.stepHeight;', 'et.y=(enabledModules["Step"]?Math.max(stepheight[1],this.stepHeight):this.stepHeight);', true);
-
-	// WTAP
-	addReplacement('this.dead||this.getHealth()<=0)return;', `
-		if (enabledModules["WTap"]) player$1.serverSprintState = false;
-	`);
-
-	// FASTBREAK
-	addReplacement('_&&player$1.mode.isCreative()', `||enabledModules["FastBreak"]`);
-
-	// INVWALK
-	addReplacement('keyPressed(j)&&Game.isActive(!1)', 'keyPressed(j)&&(Game.isActive(!1)||enabledModules["InvWalk"]&&!game.chat.showInput)', true);
-
-	// TIMER
-	addReplacement('MSPT=50,', '', true);
-	addReplacement('MODE="production";', 'let MSPT = 50;');
-	addReplacement('ut(this,"controller");', 'ut(this, "tickLoop");');
-	addReplacement('setInterval(()=>this.fixedUpdate(),MSPT)', 'this.tickLoop=setInterval(()=>this.fixedUpdate(),MSPT)', true);
-
-	// PHASE
-	addReplacement('calculateXOffset(ft,this.getEntityBoundingBox(),tt.x)', 'enabledModules["Phase"] ? tt.x : calculateXOffset(ft,this.getEntityBoundingBox(),tt.x)', true);
-	addReplacement('calculateYOffset(ft,this.getEntityBoundingBox(),tt.y)', 'enabledModules["Phase"] && keyPressedDump("shift") ? tt.y : calculateYOffset(ft,this.getEntityBoundingBox(),tt.y)', true);
-	addReplacement('calculateZOffset(ft,this.getEntityBoundingBox(),tt.z)', 'enabledModules["Phase"] ? tt.z : calculateZOffset(ft,this.getEntityBoundingBox(),tt.z)', true);
-	addReplacement('pushOutOfBlocks(_,$,et){', 'if (enabledModules["Phase"]) return;');
-
-	// AUTORESPAWN
-	addReplacement('this.game.info.showSignEditor=null,exitPointerLock())', `
-		if (this.showDeathScreen && enabledModules["AutoRespawn"]) {
-			ClientSocket.sendPacket(new SPacketRespawn$1);
-		}
-	`);
-
 	// CHAMS
 	addReplacement(')&&(et.mesh.visible=this.shouldRenderEntity(et))', `
 		if (enabledModules["Chams"] && et && et.id != player$1.id) {
@@ -373,10 +297,30 @@ function modifyCode(text) {
 		}
 	`);
 	addReplacement('async downloadCape(_){', `
-		if (_ == "GrandDad") {
+		if (_ == "Red Optifine") {
 			const $ = capes[_];
 			return new Promise((et, tt) => {
-				textureManager.loader.load("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/cape.png", rt => {
+				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/Red_OptFine_Cape.png", rt => {
+					const nt = {
+						atlas: rt,
+						id: _,
+						name: $.name,
+						ratio: rt.image.width / 64,
+						rankLevel: $.tier,
+						isCape: !0
+					};
+					SkinManager.createAtlasMat(nt), this.capes[_] = nt, et();
+				}, void 0, function(rt) {
+					console.error(rt), et();
+				});
+			});
+		}
+	`);
+	addReplacement('async downloadCape(_){', `
+		if (_ == "Black Optifine") {
+			const $ = capes[_];
+			return new Promise((et, tt) => {
+				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/Black_OptFine_Cape.png", rt => {
 					const nt = {
 						atlas: rt,
 						id: _,
