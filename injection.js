@@ -300,7 +300,7 @@ function modifyCode(text) {
 		if (_ == "Black Optifine") {
 			const $ = capes[_];
 			return new Promise((et, tt) => {
-				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/Black_OptFine_Cape.png", rt => {
+				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/cape.png", rt => {
 					const nt = {
 						atlas: rt,
 						id: _,
