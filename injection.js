@@ -372,6 +372,8 @@ function modifyCode(text) {
 			});
 		}
 	`);
+	addReplacement('bob:{id:"Emerald Sword",name:"Emerald Sword",tier:0},', 'Purple:{id:"Purple",name:"Purple",tier:2},');
+	addReplacement('Sushi:{id:"Sushi",name:"Sushi",tier:2},', 'Purple:{id:"Purple",name:"Purple",tier:2},');
 	addReplacement('async downloadCape(_){', `
 		if (_ == "Purple") {
 			const $ = capes[_];
