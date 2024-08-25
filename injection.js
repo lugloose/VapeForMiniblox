@@ -691,18 +691,18 @@ function modifyCode(text) {
 		if ($.socketId === player$1.socketId && enabledModules["AntiBan"]) {
 			hud3D.remove(hud3D.rightArm);
 			hud3D.rightArm = undefined;
-			player$1.profile.cosmetics.skin = "GrandDad";
-			$.cosmetics.skin = "GrandDad";
-			$.cosmetics.cape = "GrandDad";
+			player$1.profile.cosmetics.skin = "Purple";
+			$.cosmetics.skin = "Purple";
+			$.cosmetics.cape = "Purple";
 		}
 	`);
-	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2,skinny:!1},');
-	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'GrandDad:{id:"GrandDad",name:"GrandDad",tier:2},');
+	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'Purple:{id:"Purple",name:"Purple",tier:2,skinny:!1},');
+	addReplacement('cloud:{id:"cloud",name:"Cloud",tier:2},', 'Purple:{id:"Purple",name:"Purple",tier:2},');
 	addReplacement('async downloadSkin(_){', `
-		if (_ == "GrandDad") {
+		if (_ == "Purple") {
 			const $ = skins[_];
 			return new Promise((et, tt) => {
-				textureManager.loader.load("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/skin.png", rt => {
+				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/skin.png", rt => {
 					const nt = {
 						atlas: rt,
 						id: _,
@@ -716,11 +716,13 @@ function modifyCode(text) {
 			});
 		}
 	`);
+	addReplacement('bob:{id:"Emerald Sword",name:"Emerald Sword",tier:0},', 'Purple:{id:"Purple",name:"Purple",tier:2},');
+	addReplacement('Sushi:{id:"Sushi",name:"Sushi",tier:2},', 'Purple:{id:"Purple",name:"Purple",tier:2},');
 	addReplacement('async downloadCape(_){', `
-		if (_ == "GrandDad") {
+		if (_ == "Purple") {
 			const $ = capes[_];
 			return new Promise((et, tt) => {
-				textureManager.loader.load("https://raw.githubusercontent.com/7GrandDadPGN/VapeForMiniblox/main/assets/cape.png", rt => {
+				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/cape.png", rt => {
 					const nt = {
 						atlas: rt,
 						id: _,
