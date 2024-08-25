@@ -272,8 +272,8 @@ function modifyCode(text) {
 			hud3D.remove(hud3D.rightArm);
 			hud3D.rightArm = undefined;
 			player$1.profile.cosmetics.skin = "Purple";
-			$.cosmetics.skin = "GrandDad";
-			$.cosmetics.cape = "GrandDad";
+			$.cosmetics.skin = "Purple";
+			$.cosmetics.cape = "Optifine";
 		}
 	`);
 	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'Purple:{id:"Purple",name:"Purple",tier:2,skinny:!1},');
@@ -290,26 +290,6 @@ function modifyCode(text) {
 						ratio: rt.image.width / 64
 					};
 					SkinManager.createAtlasMat(nt), this.skins[_] = nt, et();
-				}, void 0, function(rt) {
-					console.error(rt), et();
-				});
-			});
-		}
-	`);
-	addReplacement('async downloadCape(_){', `
-		if (_ == "Red Optifine") {
-			const $ = capes[_];
-			return new Promise((et, tt) => {
-				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/Red_OptFine_Cape.png", rt => {
-					const nt = {
-						atlas: rt,
-						id: _,
-						name: $.name,
-						ratio: rt.image.width / 64,
-						rankLevel: $.tier,
-						isCape: !0
-					};
-					SkinManager.createAtlasMat(nt), this.capes[_] = nt, et();
 				}, void 0, function(rt) {
 					console.error(rt), et();
 				});
@@ -1074,7 +1054,7 @@ function modifyCode(text) {
 					e.preventDefault();
 					e.stopPropagation();
 					execute(e.target.src);
-				}
+					
 			}, false);
 		}
 		else {
