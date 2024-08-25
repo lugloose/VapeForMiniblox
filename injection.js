@@ -273,7 +273,7 @@ function modifyCode(text) {
 			hud3D.rightArm = undefined;
 			player$1.profile.cosmetics.skin = "Purple";
 			$.cosmetics.skin = "Purple";
-			$.cosmetics.cape = "Optifine";
+			$.cosmetics.cape = "Purple";
 		}
 	`);
 	addReplacement('bob:{id:"bob",name:"Bob",tier:0,skinny:!1},', 'Purple:{id:"Purple",name:"Purple",tier:2,skinny:!1},');
@@ -297,7 +297,7 @@ function modifyCode(text) {
 		}
 	`);
 	addReplacement('async downloadCape(_){', `
-		if (_ == "Optifine") {
+		if (_ == "Purple") {
 			const $ = capes[_];
 			return new Promise((et, tt) => {
 				textureManager.loader.load("https://raw.githubusercontent.com/lugloose/VapeForMiniblox/main/assets/cape.png", rt => {
